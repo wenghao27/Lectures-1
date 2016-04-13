@@ -1,8 +1,8 @@
 
 import java.util.ArrayList;
-// Calculate a large fibonacci number three times in serial (one after 
+// Calculate a large fibonacci number three times in sequence (one after 
 // the other).
-public class FibSerial {
+public class FibSequential {
    // Standard non-tail call recursive fibonacci method.
    public static int fibonacci(int n) {
       if (n == 0 || n == 1)
