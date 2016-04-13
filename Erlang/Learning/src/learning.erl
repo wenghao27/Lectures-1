@@ -2,7 +2,7 @@
 %% unless you export them.
 -module(learning).
 -export([first/1, next/1, add/2, print_and_add/2, is_even/1, newfirst/1, second/1, same/2,
-abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1]).
+abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1, len/1]).
 
 %% You include the "arity" of the function (how many arguments it takes)
 %% when referring to it.
@@ -46,6 +46,10 @@ same(_,_) -> false.
 abs(X) when X>=0 -> X;
 abs(X) -> -X.
 
+%% Erlang is naturally recursive.
+len([]) -> 0;
+len([H|T]) -> 1 + len(T).
+
 %% Fibonacci
 fib(N) when N=:=0; N=:=1 -> 1;
 fib(N) when N>1 -> fib(N-1) + fib(N-2);
@@ -62,8 +66,9 @@ beach_weather({kelvin, T}) when T >= 294 -> true;
 beach_weather(_) -> false.
 
 
-%% Challenge: write reverse, which reverses a list.
 
+
+%% Challenge: write reverse, which reverses a list.
 
 
 
@@ -72,12 +77,5 @@ beach_weather(_) -> false.
 
 
 
-
 %% Final challenge: functions are first class citizens (should be no surprise!).
 %% Write the higher-order functions map, filter, and reduce.
-
-
-
-
-
-
