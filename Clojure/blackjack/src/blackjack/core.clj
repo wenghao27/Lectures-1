@@ -21,7 +21,7 @@
 (defn new-game []
   (let [deck (shuffle (new-deck))]
     {:player-hand (list (first deck) (second deck))
-     :dealer-hand (list (nth deck 3) (nth deck 4))
+     :dealer-hand (list (nth deck 2) (nth deck 3))
      :deck (-> deck next next next next)}))
 
 (defn card-value [card]
@@ -69,7 +69,7 @@
     (println "Player hand:" (clojure.string/join ", " (map card-string hand))
              ";" score "points")
     (if (< score 21)
-      (let [next-state (do-turn game-state user-strategy)]
+      (let [next-state (do-turn game-state inactive-player-strategy)]
         (if (not= (count hand) (count (:player-hand next-state)))
           (user-turn next-state)
           next-state))
@@ -100,14 +100,14 @@
 
 (defn -main
   [& args]
-  (let [winner (one-game (new-game))]
-    (println (case winner
-               1 "Player wins!"
-               -1 "Dealer wins!"
-               :else "Tie game")))
-  )
-  ;(let [totals (many-games 1000 0 0 0)]
-  ;  (println totals)))
+  ;(let [winner (one-game (new-game))]
+  ;  (println (case winner
+  ;             1 "Player wins!"
+  ;             -1 "Dealer wins!"
+  ;             :else "Tie game")))
+  ;)
+  (let [totals (many-games 1000 0 0 0)]
+    (println totals)))
 
 (defn many-games [n player-wins dealer-wins ties]
   (let [winner (one-game (new-game))]
