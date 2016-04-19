@@ -2,7 +2,7 @@
 %% unless you export them.
 -module(learning).
 -export([first/1, next/1, add/2, print_and_add/2, is_even/1, newfirst/1, second/1, same/2,
-abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1, len/1]).
+abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1, len/1, quadratic_solve/3, demo_quadratic/0]).
 
 %% You include the "arity" of the function (how many arguments it takes)
 %% when referring to it.
@@ -66,7 +66,34 @@ beach_weather({kelvin, T}) when T >= 294 -> true;
 beach_weather(_) -> false.
 
 
+%% All these functions were simple one-liners. Let's do something more complicated,
+%% like quadratic formula.
 
+%% Remember that the # of solutions to a quadratic depends on the sign of the
+%% discriminant. My first thought is to use guards:
+%quadratic_solve(A, B, C) when B*B-4*A*C < 0 -> undefined;
+%quadratic_solve(A, B, C) when B*B-4*A*C =:= 0 -> -B / (2 * A);
+%quadratic_solve(A, B, C) -> etc.
+%% But repeating the B*B-4*A*C is wasteful. I'd rather have one big block for the function.
+
+quadratic_solve(A, B, C) ->
+  Discr = B * B - 4 * A * C,
+  if   %% WARNING: "if" DOES NOT ACT LIKE IN MOST LANGUAGES. It is more akin to "cond" in Clojure.
+    Discr < 0 -> undefined;
+    Discr =:= 0 -> -B / (2*A);
+    true ->
+      Sqrt = math:sqrt(Discr),
+      {(-B + Sqrt) / (2 * A), (-B - Sqrt) / (2 * A)}
+  end.
+
+demo_quadratic() ->
+  A = 1,
+  B = 2,
+  C = 1,
+  case quadratic_solve(A, B, C) of
+    {X1, X2} -> io:format("Two solutions: ~f and ~f~n", [X1, X2]);
+    X -> io:format("One solution: ~f~n", [X])
+  end.
 
 %% Challenge: write reverse, which reverses a list.
 
@@ -74,6 +101,7 @@ beach_weather(_) -> false.
 
 %% Challenge: write zip, which takes two lists and returns a list of tuples
 %% of corresponding elements of the two lists.
+
 
 
 
