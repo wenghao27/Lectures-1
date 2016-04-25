@@ -1,7 +1,6 @@
-
 import java.util.ArrayList;
 
-// Perform the same work as FibSerial, but in three different threads, then
+// Perform the same work as FibSequential, but in three different threads, then
 // collect the results.
 public class FibParallel {
 
@@ -51,8 +50,8 @@ public class FibParallel {
 
       @Override
       public void run() {
-         int n = fibonacci(42);
-         synchronized (results) {
+         int n = fibonacci(44);
+         synchronized(results) {
             results.add(n);
          }
       }
