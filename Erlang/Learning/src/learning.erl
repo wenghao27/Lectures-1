@@ -2,7 +2,8 @@
 %% unless you export them.
 -module(learning).
 -export([first/1, next/1, add/2, print_and_add/2, is_even/1, newfirst/1, second/1, same/2,
-abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1, len/1, quadratic_solve/3, demo_quadratic/0]).
+abs/1, appropriate_age_for_mlp/1, beach_weather/1, fib/1, len/1, quadratic_solve/3, demo_quadratic/0,
+filter/2]).
 
 %% You include the "arity" of the function (how many arguments it takes)
 %% when referring to it.
@@ -60,7 +61,7 @@ appropriate_age_for_mlp(Age) when Age >= 4, Age =< 9 -> true;
 appropriate_age_for_mlp(_) -> false.
 
 %% combining pattern matching and guards to do interesting things.
-beach_weather({fahrenheit, T}) when T >= 70 -> true;
+beach_weather({fahrenheit, T}) when T >= 70, T =< 100 -> true;
 beach_weather({celcius, T}) when T >= 21 -> true;
 beach_weather({kelvin, T}) when T >= 294 -> true;
 beach_weather(_) -> false.
@@ -88,14 +89,16 @@ quadratic_solve(A, B, C) ->
 
 demo_quadratic() ->
   A = 1,
-  B = 2,
+  B = 0,
   C = 1,
   case quadratic_solve(A, B, C) of
+    undefined -> io:format("Zero real solutions");
     {X1, X2} -> io:format("Two solutions: ~f and ~f~n", [X1, X2]);
     X -> io:format("One solution: ~f~n", [X])
   end.
 
 %% Challenge: write reverse, which reverses a list.
+
 
 
 
@@ -107,3 +110,5 @@ demo_quadratic() ->
 
 %% Final challenge: functions are first class citizens (should be no surprise!).
 %% Write the higher-order functions map, filter, and reduce.
+
+
