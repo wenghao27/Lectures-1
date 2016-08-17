@@ -4,7 +4,7 @@
 (defn credit-check [person]
   ; assume some work is done to compute the credit check
   (Thread/sleep 1000)
-  true)
+  750)
 
 (defn home-check [person]
   (Thread/sleep 10000)
@@ -16,17 +16,19 @@
     (and
       (= numpets
          ; filter the list of pets to contain those that are ok with adopting
-         (count (filter #((:friendly-with %) (:species adopting)) (:pets person))))
+         (count (filter #((:friendly-with %) (:species adopting))
+                        (:pets person))))
       (= numpets
          ; filter the list of pets to contain those that the adopting is ok with
-         (count (filter #((:friendly-with adopting) (:species %)) (:pets person)))))))
+         (count (filter #((:friendly-with adopting) (:species %))
+                        (:pets person)))))))
 
 (defn can-adopt? [person animal]
   (let [credit (future (credit-check person))
         home (future (home-check person))
         pets (future (pet-friendly person animal))]
     (cond
-      (not @credit) false
+      (< @credit 500) false
       (not @home) false
       (not @pets) false
       :else true)))
